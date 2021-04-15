@@ -22,7 +22,7 @@ const initialState: UserState = {
 const reducer = createReducer<UserState, UserAction>(initialState, {
   [FETCH]: (state) =>
     produce(state, (draft) => {
-      draft.loading.FETCH = false;
+      draft.loading.FETCH = true;
     }),
   [FETCH_SUCCESS]: (state, action) =>
     produce(state, (draft) => {

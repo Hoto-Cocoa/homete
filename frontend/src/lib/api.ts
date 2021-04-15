@@ -54,6 +54,16 @@ export const getHometes = async (screenName: string): Promise<Homete[]> => {
   );
 };
 
+export const getHometeById = async (docId: string): Promise<Homete> => {
+  const db = firebase.firestore();
+  const doc: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await db
+    .collection("hometes")
+    .doc(docId)
+    .get();
+
+  return doc.data() as Homete;
+};
+
 export const setHomete = async ({
   recipient,
   description,

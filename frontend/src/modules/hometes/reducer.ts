@@ -5,6 +5,9 @@ import {
   FETCH,
   FETCH_SUCCESS,
   FETCH_FAILURE,
+  FETCH_ONE,
+  FETCH_ONE_SUCCESS,
+  FETCH_ONE_FAILURE,
   SEND,
   SEND_SUCCESS,
   SEND_FAILURE,
@@ -19,10 +22,12 @@ import {
 const initialState: HometesState = {
   loading: {
     FETCH: false,
+    FETCH_ONE: false,
     SEND: false,
     APPROVE: false,
     REJECT: false,
   },
+  homete: null,
   hometes: [],
 };
 
@@ -39,6 +44,19 @@ const reducer = createReducer<HometesState, HometesAction>(initialState, {
   [FETCH_FAILURE]: (state) =>
     produce(state, (draft) => {
       draft.loading.FETCH = false;
+    }),
+  [FETCH_ONE]: (state) =>
+    produce(state, (draft) => {
+      draft.loading.FETCH_ONE = true;
+    }),
+  [FETCH_ONE_SUCCESS]: (state, action) =>
+    produce(state, (draft) => {
+      draft.loading.FETCH_ONE = false;
+      draft.homete = action.payload;
+    }),
+  [FETCH_ONE_FAILURE]: (state) =>
+    produce(state, (draft) => {
+      draft.loading.FETCH_ONE = false;
     }),
   [SEND]: (state) =>
     produce(state, (draft) => {

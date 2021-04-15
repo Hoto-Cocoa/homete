@@ -2,6 +2,8 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import {
   FETCH,
   fetchAsync,
+  FETCH_ONE,
+  fetchOneAsync,
   SEND,
   sendAsync,
   APPROVE,
@@ -23,6 +25,17 @@ function* fetchSaga(action: ReturnType<typeof fetchAsync.request>): Generator {
   } catch (e) {
     // hometes 가져오기 에러
     yield put(fetchAsync.failure(e));
+  }
+}
+
+function* fetchOneSaga(
+  action: ReturnType<typeof fetchOneAsync.request>,
+): Generator {
+  try {
+    const homete = yield call(api.getHometeById, action.payload);
+    yield put(fetchOneAsync.success(homete as Homete));
+  } catch (e) {
+    yield put(fetchOneAsync.failure(e));
   }
 }
 
@@ -89,6 +102,7 @@ function* rejectSaga(
 
 export function* hometesSaga() {
   yield takeLatest(FETCH, fetchSaga);
+  yield takeLatest(FETCH_ONE, fetchOneSaga);
   yield takeLatest(SEND, sendSaga);
   yield takeLatest(APPROVE, approveSaga);
   yield takeLatest(REJECT, rejectSaga);
