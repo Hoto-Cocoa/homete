@@ -23,7 +23,7 @@ const HometeCard = ({
 
   const onTwitterShare = () => {
     const text = `칭찬받았어요! 😊 — ${description}`;
-    const url = `homete.driip.me/${recipient}`;
+    const url = `homete.driip.me/${recipient}/${id}`;
     window.open(
       `https://twitter.com/intent/tweet?text=${encodeURI(
         text,
